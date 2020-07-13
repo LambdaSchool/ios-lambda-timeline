@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eqh-QM-YHW">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Image Post View Controller-->
+        <scene sceneID="Tgb-t9-m2O">
+            <objects>
+                <viewController id="JRT-EB-EPd" customClass="ImagePostViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZXt-aJ-hTs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fUz-MM-u8Z">
+                                <rect key="frame" x="20" y="108" width="374" height="734"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="15J-Oo-n7n">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="80"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dS-Xq-A1B">
+                                                <rect key="frame" x="93.5" y="0.0" width="187" height="80"/>
+                                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="80" id="lT8-1x-iKY"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <state key="normal" title="Select Image">
+                                                    <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="selectImageTapped:" destination="JRT-EB-EPd" eventType="touchUpInside" id="934-L3-Jid"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="3dS-Xq-A1B" firstAttribute="centerY" secondItem="15J-Oo-n7n" secondAttribute="centerY" id="Sf1-uk-x3Q"/>
+                                            <constraint firstItem="3dS-Xq-A1B" firstAttribute="centerX" secondItem="15J-Oo-n7n" secondAttribute="centerX" id="bUJ-uw-jh5"/>
+                                            <constraint firstAttribute="height" secondItem="3dS-Xq-A1B" secondAttribute="height" id="co4-qX-QHx"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="iO2-fK-Q8b">
+                                        <rect key="frame" x="0.0" y="100" width="374" height="454"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Aus-1q-SeP">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="280.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="Aus-1q-SeP" secondAttribute="height" multiplier="4:3" id="FNd-Pg-zZc"/>
+                                                </constraints>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xUR-t7-lDd" userLabel="Filter Buttons">
+                                                <rect key="frame" x="0.0" y="300.5" width="374" height="40"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GcV-YC-sky">
+                                                        <rect key="frame" x="0.0" y="0.0" width="183" height="40"/>
+                                                        <state key="normal" title="Color Controls"/>
+                                                        <state key="selected">
+                                                            <color key="titleColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <state key="highlighted">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="blurSelected:" destination="JRT-EB-EPd" eventType="touchUpInside" id="hF1-pf-9dM"/>
+                                                            <action selector="colorControlsSelected:" destination="JRT-EB-EPd" eventType="touchUpInside" id="azg-rb-pfg"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETg-b6-1bw">
+                                                        <rect key="frame" x="191" y="0.0" width="183" height="40"/>
+                                                        <state key="normal" title="Blur"/>
+                                                        <state key="selected">
+                                                            <color key="titleColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <state key="highlighted">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="blurSelected:" destination="JRT-EB-EPd" eventType="touchUpInside" id="bzy-LH-GOx"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="bul-hh-sq8"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Uqi-Qb-1ye">
+                                                <rect key="frame" x="0.0" y="360.5" width="374" height="93.5"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kMC-Li-I0J">
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brightness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2j-tu-vZz">
+                                                                <rect key="frame" x="0.0" y="0.0" width="82" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vfn-pA-I5b">
+                                                                <rect key="frame" x="88" y="0.0" width="288" height="21.5"/>
+                                                                <connections>
+                                                                    <action selector="sliderValueChanged:" destination="JRT-EB-EPd" eventType="valueChanged" id="Ah1-pS-k7k"/>
+                                                                </connections>
+                                                            </slider>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zbq-nK-E03">
+                                                        <rect key="frame" x="0.0" y="36.5" width="374" height="20.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contrast" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH6-7B-ytt">
+                                                                <rect key="frame" x="0.0" y="0.0" width="66.5" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.25" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="N11-G2-ewz">
+                                                                <rect key="frame" x="72.5" y="0.0" width="303.5" height="21.5"/>
+                                                                <connections>
+                                                                    <action selector="sliderValueChanged:" destination="JRT-EB-EPd" eventType="valueChanged" id="MDX-JJ-AJu"/>
+                                                                </connections>
+                                                            </slider>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GUk-dJ-KJQ">
+                                                        <rect key="frame" x="0.0" y="73" width="374" height="20.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saturation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="crq-V6-djp">
+                                                                <rect key="frame" x="0.0" y="0.0" width="79" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="hCn-Xc-CfE">
+                                                                <rect key="frame" x="85" y="0.0" width="291" height="21.5"/>
+                                                                <connections>
+                                                                    <action selector="sliderValueChanged:" destination="JRT-EB-EPd" eventType="valueChanged" id="SnB-ma-ku9"/>
+                                                                </connections>
+                                                            </slider>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                            <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="OLn-kL-0QI">
+                                                <rect key="frame" x="-2" y="454" width="378" height="1"/>
+                                                <connections>
+                                                    <action selector="sliderValueChanged:" destination="JRT-EB-EPd" eventType="valueChanged" id="qNN-NU-WZm"/>
+                                                </connections>
+                                            </slider>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpO-E1-ZzR" userLabel="Spacer">
+                                        <rect key="frame" x="0.0" y="574" width="374" height="160"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="3dS-Xq-A1B" firstAttribute="width" secondItem="fUz-MM-u8Z" secondAttribute="width" multiplier="0.5" id="8Py-r1-J5s"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="wz1-Va-HcY" firstAttribute="bottom" secondItem="fUz-MM-u8Z" secondAttribute="bottom" constant="20" id="QZW-kd-Vez"/>
+                            <constraint firstItem="fUz-MM-u8Z" firstAttribute="top" secondItem="wz1-Va-HcY" secondAttribute="top" constant="20" id="S7d-xq-FfI"/>
+                            <constraint firstItem="wz1-Va-HcY" firstAttribute="trailing" secondItem="fUz-MM-u8Z" secondAttribute="trailing" constant="20" id="VDY-Qm-gHs"/>
+                            <constraint firstItem="fUz-MM-u8Z" firstAttribute="leading" secondItem="wz1-Va-HcY" secondAttribute="leading" constant="20" id="uh1-iZ-oLk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wz1-Va-HcY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="FY2-Hd-dhV"/>
+                    <connections>
+                        <outlet property="blurButton" destination="ETg-b6-1bw" id="s9w-Ti-bcf"/>
+                        <outlet property="blurSlider" destination="OLn-kL-0QI" id="xpF-xu-hkW"/>
+                        <outlet property="brightnessSlider" destination="vfn-pA-I5b" id="ooK-oF-6dx"/>
+                        <outlet property="colorControlsButton" destination="GcV-YC-sky" id="vkz-kX-wU2"/>
+                        <outlet property="colorControlsStack" destination="Uqi-Qb-1ye" id="apA-X5-93K"/>
+                        <outlet property="contrastSlider" destination="N11-G2-ewz" id="4V3-Jg-HLD"/>
+                        <outlet property="imageAndFilterStack" destination="iO2-fK-Q8b" id="1xt-0N-C34"/>
+                        <outlet property="imageView" destination="Aus-1q-SeP" id="ub9-jc-gbe"/>
+                        <outlet property="saturationSlider" destination="hCn-Xc-CfE" id="f3l-Uz-mOb"/>
+                        <outlet property="selectImageButton" destination="3dS-Xq-A1B" id="3ja-Ya-RJ5"/>
+                        <outlet property="selectImageContainer" destination="15J-Oo-n7n" id="kOD-rt-MVl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gVB-5B-IU3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="776.81159420289862" y="66.964285714285708"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bT6-GE-uDu">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eqh-QM-YHW" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="13n-0T-hVa">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="JRT-EB-EPd" kind="relationship" relationship="rootViewController" id="xGl-sJ-Scv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Fu-hd-iaS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-133.33333333333334" y="66.964285714285708"/>
+        </scene>
+    </scenes>
+</document>
