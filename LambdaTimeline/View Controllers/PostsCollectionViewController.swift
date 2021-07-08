@@ -12,6 +12,13 @@ import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    // MARK: - Properties
+    private let postController = PostController()
+    private var operations = [String : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Data>()
+    
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,6 +29,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+    // MARK: - UI Actions
     @IBAction func addPost(_ sender: Any) {
         
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
@@ -30,16 +38,18 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
+        let videoPostAction = UIAlertAction(title: "Video", style: .default, handler: videoPostAlertActionHandler)
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
     }
     
-    // MARK: UICollectionViewDataSource
-    
+    // MARK: UI Collection View Data Source
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return postController.posts.count
     }
@@ -55,6 +65,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             cell.post = post
             
             loadImage(for: cell, forItemAt: indexPath)
+            
+            return cell
+            
+        case .video:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as! VideoPostCollectionViewCell
+            
+            cell.post = post
             
             return cell
         }
@@ -73,18 +90,38 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+            
+        case .video:
+            if let ratio = post.ratio { size.height = size.width * ratio }
         }
         
         return size
     }
     
-    
+    // MARK: - UI Collection View Delegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         
         if let cell = cell as? ImagePostCollectionViewCell,
             cell.imageView.image != nil {
-            self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
+        }
+        self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        if let cell = cell as? VideoPostCollectionViewCell {
+            cell.playPause()
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        if let cell = cell as? VideoPostCollectionViewCell {
+            cell.pause()
         }
     }
     
@@ -93,8 +130,31 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         guard let postID = postController.posts[indexPath.row].id else { return }
         operations[postID]?.cancel()
     }
+
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddImagePost" {
+            let destinationVC = segue.destination as? ImagePostViewController
+            destinationVC?.postController = postController
+            
+        } else if segue.identifier == "AddVideoPostSegue" {
+            let destinactionVC = segue.destination as! VideoPostViewController
+            destinactionVC.postController = postController
+        } else if segue.identifier == "ViewImagePost" {
+            
+            let destinationVC = segue.destination as? ImagePostDetailTableViewController
+            
+            guard let indexPath = collectionView.indexPathsForSelectedItems?.first,
+                let postID = postController.posts[indexPath.row].id else { return }
+            
+            destinationVC?.postController = postController
+            destinationVC?.post = postController.posts[indexPath.row]
+            destinationVC?.imageData = cache.value(for: postID)
+        }
+    }
     
-    func loadImage(for imagePostCell: ImagePostCollectionViewCell, forItemAt indexPath: IndexPath) {
+    // MARK - Utility Methods
+    private func loadImage(for imagePostCell: ImagePostCollectionViewCell, forItemAt indexPath: IndexPath) {
         let post = postController.posts[indexPath.row]
         
         guard let postID = post.id else { return }
@@ -122,7 +182,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             if let currentIndexPath = self.collectionView?.indexPath(for: imagePostCell),
                 currentIndexPath != indexPath {
-                print("Got image for now-reused cell")
                 return
             }
             
@@ -141,29 +200,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         operations[postID] = fetchOp
     }
-    // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AddImagePost" {
-            let destinationVC = segue.destination as? ImagePostViewController
-            destinationVC?.postController = postController
-            
-        } else if segue.identifier == "ViewImagePost" {
-            
-            let destinationVC = segue.destination as? ImagePostDetailTableViewController
-            
-            guard let indexPath = collectionView.indexPathsForSelectedItems?.first,
-                let postID = postController.posts[indexPath.row].id else { return }
-            
-            destinationVC?.postController = postController
-            destinationVC?.post = postController.posts[indexPath.row]
-            destinationVC?.imageData = cache.value(for: postID)
+    private func videoPostAlertActionHandler(alertAction: UIAlertAction) {
+        AVCaptureDeviceHelper.shared.checkAuthorizationStatus { (alertController) in
+            DispatchQueue.main.async {
+                if let alertController = alertController {
+                    self.present(alertController, animated: true)
+                } else {
+                    self.performSegue(withIdentifier: "AddVideoPostSegue", sender: self)
+                }
+            }
         }
     }
-    
-    private let postController = PostController()
-    private var operations = [String : Operation]()
-    private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<String, Data>()
 }

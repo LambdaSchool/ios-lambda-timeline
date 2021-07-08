@@ -30,10 +30,7 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
     }
 
     func setupLabelBackgroundView() {
-        labelBackgroundView.layer.cornerRadius = 8
-//        labelBackgroundView.layer.borderColor = UIColor.white.cgColor
-//        labelBackgroundView.layer.borderWidth = 0.5
-        labelBackgroundView.clipsToBounds = true
+        labelBackgroundView.setupGradient(startColor: .darkerBlack, endColor: .lighterBlack)
     }
     
     func setImage(_ image: UIImage?) {
@@ -49,6 +46,6 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
 @IBOutlet weak var imageView: UIImageView!
 @IBOutlet weak var titleLabel: UILabel!
 @IBOutlet weak var authorLabel: UILabel!
-@IBOutlet weak var labelBackgroundView: UIView!
+@IBOutlet weak var labelBackgroundView: GradientView!
 
 }
